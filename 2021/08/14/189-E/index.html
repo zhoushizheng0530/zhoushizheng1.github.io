@@ -14,11 +14,11 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#2f4154">
-  <meta name="description" content="ST表好题">
+  <meta name="description" content="我只用 kruskal！">
   <meta name="author" content="Rain">
   <meta name="keywords" content="">
   
-  <title>187-R Sparse Table A - Rain&#39;s blog</title>
+  <title>189-E Tree之最小方差树 - Rain&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -175,7 +175,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="187-R Sparse Table A">
+            <span class="h2" id="subtitle" title="189-E Tree之最小方差树">
               
             </span>
 
@@ -185,8 +185,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-08-13 18:42" pubdate>
-        2021年8月13日 晚上
+      <time datetime="2021-08-14 19:56" pubdate>
+        2021年8月14日 晚上
       </time>
     </span>
   
@@ -197,7 +197,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      346 字
+      334 字
     </span>
   
 
@@ -236,17 +236,17 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">187-R Sparse Table A</h1>
+            <h1 style="display: none">189-E Tree之最小方差树</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：1 天前
+                  本文最后更新于：几秒前
                 
               </p>
             
             <div class="markdown-body">
-              <p>ST 表预处理出区间 $\min$ 和区间 $\gcd$，二分区间长度，<code>check</code> 时枚举左端点，判断该区间 $\gcd$ 是否 $=\min$。<br>$n\leq 5\times 10^5$ 时，$L$ 要取到 19，不然最后一个点会 <font color=red><b>Wrong Answer</b></font> 。<br>$O(n \log n)$</p>
-<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> N 500005</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> L 19</span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">int</span> n, m, a[N], st[N][L], st1[N][L], lg[N], ans;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">gcd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span> </span>&#123; <span class="hljs-keyword">return</span> y ? <span class="hljs-built_in">gcd</span>(y, x % y) : x; &#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">pre_work</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    lg[<span class="hljs-number">0</span>] = <span class="hljs-number">-1</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>    &#123;<br>        lg[i] = lg[i &gt;&gt; <span class="hljs-number">1</span>] + <span class="hljs-number">1</span>;<br>        st[i][<span class="hljs-number">0</span>] = st1[i][<span class="hljs-number">0</span>] = a[i];<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j + <span class="hljs-number">1</span> &lt; L; j++)<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i + (<span class="hljs-number">1</span> &lt;&lt; (j + <span class="hljs-number">1</span>)) - <span class="hljs-number">1</span> &lt;= n; i++)<br>            st[i][j + <span class="hljs-number">1</span>] = std::<span class="hljs-built_in">min</span>(st[i][j], st[i + (<span class="hljs-number">1</span> &lt;&lt; j)][j]);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j + <span class="hljs-number">1</span> &lt; L; j++)<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i + (<span class="hljs-number">1</span> &lt;&lt; (j + <span class="hljs-number">1</span>)) - <span class="hljs-number">1</span> &lt;= n; i++)<br>            st1[i][j + <span class="hljs-number">1</span>] = <span class="hljs-built_in">gcd</span>(st1[i][j], st1[i + (<span class="hljs-number">1</span> &lt;&lt; j)][j]);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> g = lg[r - l + <span class="hljs-number">1</span>];<br>    <span class="hljs-keyword">return</span> std::<span class="hljs-built_in">min</span>(st[l][g], st[r - (<span class="hljs-number">1</span> &lt;&lt; g) + <span class="hljs-number">1</span>][g]) == <span class="hljs-built_in">gcd</span>(st1[l][g], st1[r - (<span class="hljs-number">1</span> &lt;&lt; g) + <span class="hljs-number">1</span>][g]);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">check</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n - x + <span class="hljs-number">1</span>; i++)<br>        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">query</span>(i, i + x - <span class="hljs-number">1</span>))<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">binary</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">int</span> l = <span class="hljs-number">1</span>, r = n;<br>    <span class="hljs-keyword">while</span> (l &lt;= r)<br>    &#123;<br>        <span class="hljs-keyword">int</span> mid = l + r &gt;&gt; <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">check</span>(mid))<br>        &#123;<br>            ans = mid;<br>            l = mid + <span class="hljs-number">1</span>;<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>            r = mid - <span class="hljs-number">1</span>;<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>        cin &gt;&gt; a[i];<br>    <span class="hljs-built_in">pre_work</span>();<br>    <span class="hljs-built_in">binary</span>();<br>    cout &lt;&lt; ans;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+              <p>首先发现 $C_i$​ 的值特别小，于是可以枚举平均数 $ave$​。<br>将每条边的边权改为 $(C_i-ave)^2$​，跑最小生成树更新答案。<br>注意不能真正枚举 $ave$​，要枚举总和再 $\dfrac{sum}{n-1}$​ 求出 $ave$​。<br>时间复杂度 $O(\sum\limits_{i=1}^nC_i\ m\log m)$​。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> N 105</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> M 2005</span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">int</span> n, m, fa[N], cnt, fr, sjb = <span class="hljs-number">0x3f3f3f3f</span>;<br><span class="hljs-keyword">double</span> ans = <span class="hljs-number">0x3f3f3f3f</span>;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">edge</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-keyword">int</span> u, v, c;<br>    <span class="hljs-keyword">double</span> w;<br>    <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span>&lt;(<span class="hljs-keyword">const</span> edge x) <span class="hljs-keyword">const</span> &#123; <span class="hljs-keyword">return</span> w &lt; x.w; &#125;<br>&#125;;<br>edge e[M];<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>&#123; <span class="hljs-keyword">return</span> x == fa[x] ? x : fa[x] = <span class="hljs-built_in">find</span>(fa[x]); &#125;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">mrg</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span> </span>&#123; fa[<span class="hljs-built_in">find</span>(x)] = <span class="hljs-built_in">find</span>(y); &#125;<br><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">qry</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span> </span>&#123; <span class="hljs-keyword">return</span> <span class="hljs-built_in">find</span>(x) == <span class="hljs-built_in">find</span>(y); &#125;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">kruskal</span><span class="hljs-params">(<span class="hljs-keyword">double</span> ave)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">double</span> tmp = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>        fa[i] = i;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++)<br>        e[i].w = (e[i].c - ave) * (e[i].c - ave);<br>    <span class="hljs-built_in">sort</span>(e + <span class="hljs-number">1</span>, e + m + <span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++)<br>        <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">qry</span>(e[i].u, e[i].v))<br>        &#123;<br>            <span class="hljs-built_in">mrg</span>(e[i].u, e[i].v);<br>            tmp += e[i].w;<br>            cnt++;<br>            <span class="hljs-keyword">if</span> (cnt == n - <span class="hljs-number">1</span>)<br>                <span class="hljs-keyword">break</span>;<br>        &#125;<br>    ans = <span class="hljs-built_in">min</span>(ans, <span class="hljs-built_in">sqrt</span>(tmp / (n - <span class="hljs-number">1</span>)));<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>, u, v, c; i &lt;= m; i++)<br>    &#123;<br>        cin &gt;&gt; u &gt;&gt; v &gt;&gt; c;<br>        fr = <span class="hljs-built_in">max</span>(fr, c), sjb = <span class="hljs-built_in">min</span>(sjb, c);<br>        e[i] = &#123;u, v, c, <span class="hljs-number">0</span>&#125;;<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">10000</span>; i++)<br>        <span class="hljs-built_in">kruskal</span>(<span class="hljs-built_in"><span class="hljs-keyword">double</span></span>(i) / (n - <span class="hljs-number">1</span>));<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%.4f&quot;</span>, ans);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 
             </div>
             <hr>
@@ -257,9 +257,9 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+                      <a class="hover-with-bg" href="/tags/%E5%9B%BE%E8%AE%BA/">图论</a>
                     
-                      <a class="hover-with-bg" href="/tags/ST%E8%A1%A8/">ST表</a>
+                      <a class="hover-with-bg" href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/">最小生成树</a>
                     
                   </div>
                 
@@ -276,18 +276,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2021/08/13/%E6%9D%BF%E5%AD%90/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">模板集合</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021/08/11/%E6%97%85%E6%B8%B8/">
-                        <span class="hidden-mobile">35006 旅游</span>
+                      <a href="/2021/08/13/197-K/">
+                        <span class="hidden-mobile">197-K 骑士</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
