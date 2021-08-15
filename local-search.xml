@@ -4,6 +4,27 @@
   
   
   <entry>
+    <title>195-D 花匠</title>
+    <link href="/2021/08/15/195-D/"/>
+    <url>/2021/08/15/195-D/</url>
+    
+    <content type="html"><![CDATA[<p>设 $f(i,0/1)$ 表示前 $i$ 个数中最长的波浪形序列，第二维是 $0$ 表示最后一个数比倒数第二个数小，$1$ 表示最后一个数比倒数第二个数大。<br>初始化 $f(i,0)\gets 1,f(i,1)\gets 1$。<br>有转移方程：</p><script type="math/tex; mode=display">f(i,0)=f(i-1,1)+1[h_i<h_{i-1}]\\f(i,0)=f(i-1,0)[h_i\geq h_{i-1}]\\f(i,1)=f(i-1,0)+1[h_i>h_{i-1}]\\f(i,1)=f(i-1,1)[h_i\leq h_{i-1}]</script><p>答案为 $\max{f(n,0),f(n,1)}$。</p><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> N 2000005</span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">int</span> f[N][<span class="hljs-number">2</span>], n, h[N];<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    f[<span class="hljs-number">1</span>][<span class="hljs-number">0</span>] = f[<span class="hljs-number">1</span>][<span class="hljs-number">1</span>] = <span class="hljs-number">1</span>;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>        cin &gt;&gt; h[i];<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">2</span>; i &lt;= n; i++)<br>    &#123;<br>        f[i][<span class="hljs-number">0</span>] = h[i] &lt; h[i - <span class="hljs-number">1</span>] ? f[i - <span class="hljs-number">1</span>][<span class="hljs-number">1</span>] + <span class="hljs-number">1</span> : f[i - <span class="hljs-number">1</span>][<span class="hljs-number">0</span>];<br>        f[i][<span class="hljs-number">1</span>] = h[i] &gt; h[i - <span class="hljs-number">1</span>] ? f[i - <span class="hljs-number">1</span>][<span class="hljs-number">0</span>] + <span class="hljs-number">1</span> : f[i - <span class="hljs-number">1</span>][<span class="hljs-number">1</span>];<br>    &#125;<br>    cout &lt;&lt; <span class="hljs-built_in">max</span>(f[n][<span class="hljs-number">0</span>], f[n][<span class="hljs-number">1</span>]);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>动态规划</tag>
+      
+      <tag>线性dp</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>189-E Tree之最小方差树</title>
     <link href="/2021/08/14/189-E/"/>
     <url>/2021/08/14/189-E/</url>
