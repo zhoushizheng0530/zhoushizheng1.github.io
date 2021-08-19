@@ -14,9 +14,9 @@
       
         <tags>
             
-            <tag> 图论 </tag>
-            
             <tag> 二分答案 </tag>
+            
+            <tag> 图论 </tag>
             
             <tag> 最短路 </tag>
             
@@ -39,11 +39,11 @@
       
         <tags>
             
+            <tag> 图论 </tag>
+            
             <tag> 动态规划 </tag>
             
             <tag> DAG 上的 DP </tag>
-            
-            <tag> 图论 </tag>
             
             <tag> 拓扑排序 </tag>
             
@@ -334,11 +334,11 @@
       
         <tags>
             
-            <tag> 图论 </tag>
-            
             <tag> 数据结构 </tag>
             
             <tag> 线段树 </tag>
+            
+            <tag> 图论 </tag>
             
             <tag> 树链剖分 </tag>
             
