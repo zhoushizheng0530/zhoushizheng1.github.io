@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>「Corn#16」数据结构</title>
+    <link href="/2021/08/23/Corn16-T1/"/>
+    <url>/2021/08/23/Corn16-T1/</url>
+    
+    <content type="html"><![CDATA[<p>首先将所有询问按人所处位置排序。<br />从左到右扫每个建筑和询问，用单调栈维护在这个位置上能看到的建筑。<br />处理能见度：在单调栈上二分查找，求出最远能望到的建筑的下标。<br />最后更新每个询问的答案。</p><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> N 2000005</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> IO(x) freopen(x <span class="hljs-meta-string">&quot;.in&quot;</span>, <span class="hljs-meta-string">&quot;r&quot;</span>, stdin), freopen(x <span class="hljs-meta-string">&quot;.out&quot;</span>, <span class="hljs-meta-string">&quot;w&quot;</span>, stdout)</span><br><span class="hljs-keyword">int</span> n, m;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">node</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-keyword">int</span> op, val, pos, id;<br>    <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span>&lt;(<span class="hljs-keyword">const</span> node &amp;x) <span class="hljs-keyword">const</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> pos == x.pos ? op &lt; x.op : pos &lt; x.pos;<br>    &#125;<br>&#125; a[N];<br><br><span class="hljs-keyword">int</span> top, stk[N], ans[N];<br><span class="hljs-keyword">int</span> l, r, res;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">IO</span>(<span class="hljs-string">&quot;DS&quot;</span>);<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>        cin &gt;&gt; a[i].pos &gt;&gt; a[i].val, a[i].op = <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++)<br>        cin &gt;&gt; a[i + n].val &gt;&gt; a[i + n].pos, a[i + n].op = <span class="hljs-number">1</span>, a[i + n].id = i;<br>    <span class="hljs-built_in">sort</span>(a + <span class="hljs-number">1</span>, a + n + m + <span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n + m; i++)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (a[i].op == <span class="hljs-number">2</span>)<br>        &#123;<br>            <span class="hljs-keyword">while</span> (top != <span class="hljs-number">0</span> &amp;&amp; a[stk[top]].val &lt;= a[i].val)<br>                top--;<br>            stk[++top] = i;<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            l = <span class="hljs-number">1</span>, r = top, res = top + <span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">while</span> (l &lt;= r)<br>            &#123;<br>                <span class="hljs-keyword">int</span> mid = (l + r) &gt;&gt; <span class="hljs-number">1</span>;<br>                <span class="hljs-keyword">if</span> (a[i].pos - a[stk[mid]].pos &lt;= a[i].val)<br>                    res = mid, r = mid - <span class="hljs-number">1</span>;<br>                <span class="hljs-keyword">else</span><br>                    l = mid + <span class="hljs-number">1</span>;<br>            &#125;<br>            ans[a[i].id] = top - res + <span class="hljs-number">1</span>;<br>        &#125;<br>    &#125;<br>    top = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = n + m; i &gt;= <span class="hljs-number">1</span>; i--)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (a[i].op == <span class="hljs-number">2</span>)<br>        &#123;<br>            <span class="hljs-keyword">while</span> (top != <span class="hljs-number">0</span> &amp;&amp; a[stk[top]].val &lt;= a[i].val)<br>                top--;<br>            stk[++top] = i;<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            l = <span class="hljs-number">1</span>, r = top, res = top + <span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">while</span> (l &lt;= r)<br>            &#123;<br>                <span class="hljs-keyword">int</span> mid = (l + r) &gt;&gt; <span class="hljs-number">1</span>;<br>                <span class="hljs-keyword">if</span> (a[stk[mid]].pos - a[i].pos &lt;= a[i].val)<br>                    res = mid, r = mid - <span class="hljs-number">1</span>;<br>                <span class="hljs-keyword">else</span><br>                    l = mid + <span class="hljs-number">1</span>;<br>            &#125;<br>            ans[a[i].id] += top - res + <span class="hljs-number">1</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++)<br>        cout &lt;&lt; ans[i] &lt;&lt; endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>题解</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>数据结构</tag>
+      
+      <tag>二分查找</tag>
+      
+      <tag>单调栈</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>「Corn#16」离散数学</title>
     <link href="/2021/08/23/Corn16-T4/"/>
     <url>/2021/08/23/Corn16-T4/</url>
@@ -319,6 +348,8 @@
       <tag>数据结构</tag>
       
       <tag>线段树</tag>
+      
+      <tag>二分查找</tag>
       
       <tag>线段树上二分</tag>
       
