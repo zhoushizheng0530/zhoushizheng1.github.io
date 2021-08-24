@@ -201,7 +201,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      215 字
+      217 字
     </span>
   
 
@@ -244,7 +244,9 @@ f(i-1,0)&\text{if }h_i\geq h_{i-1}
 f(i,1)=\begin{cases}
 f(i-1,0)+1&\text{if }h_i>h_{i-1}\\
 f(i-1,1)&\text{if }h_i\leq h_{i-1}
-\end{cases}</script><p>答案为 $\max\{f(n,0),f(n,1)\}$。</p>
+\end{cases}</script><script type="math/tex; mode=display">
+1\\
+1</script><p>答案为 $\max\{f(n,0),f(n,1)\}$。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> N 2000005</span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-keyword">int</span> f[N][<span class="hljs-number">2</span>], n, h[N];<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    f[<span class="hljs-number">1</span>][<span class="hljs-number">0</span>] = f[<span class="hljs-number">1</span>][<span class="hljs-number">1</span>] = <span class="hljs-number">1</span>;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>        cin &gt;&gt; h[i];<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">2</span>; i &lt;= n; i++)<br>    &#123;<br>        f[i][<span class="hljs-number">0</span>] = h[i] &lt; h[i - <span class="hljs-number">1</span>] ? f[i - <span class="hljs-number">1</span>][<span class="hljs-number">1</span>] + <span class="hljs-number">1</span> : f[i - <span class="hljs-number">1</span>][<span class="hljs-number">0</span>];<br>        f[i][<span class="hljs-number">1</span>] = h[i] &gt; h[i - <span class="hljs-number">1</span>] ? f[i - <span class="hljs-number">1</span>][<span class="hljs-number">0</span>] + <span class="hljs-number">1</span> : f[i - <span class="hljs-number">1</span>][<span class="hljs-number">1</span>];<br>    &#125;<br>    cout &lt;&lt; <span class="hljs-built_in">max</span>(f[n][<span class="hljs-number">0</span>], f[n][<span class="hljs-number">1</span>]);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 
             </div>
