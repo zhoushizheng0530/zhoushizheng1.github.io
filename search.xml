@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>「Corn#15」身败名裂</title>
+      <link href="/2021/08/24/Corn15-T3/"/>
+      <url>/2021/08/24/Corn15-T3/</url>
+      
+        <content type="html"><![CDATA[<p>如果 $k=1$，这就是一道 01-Trie 的模板题。<br>现在考虑 $k\ne1$ 的情况。<br>$k=1$ 时，在树上贪心的走 $x$ 对应位取反的边。<br>$k\ne1$ 时，以 $x$ 对应位为 $1$举例：<br>如果 $k\geq$ 边 $0$ 所对应子树大小（数字个数），则走 $1$，否则走 $0$，并且 <code>k -= num[a[pos][!val]]</code>。</p><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> N 10000005</span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">template</span> &lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>&gt;</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">read</span><span class="hljs-params">(T &amp;x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">char</span> c = <span class="hljs-built_in">getchar</span>(), d;<br>    x = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span> (!<span class="hljs-built_in">isdigit</span>(c))<br>        d = c, c = <span class="hljs-built_in">getchar</span>();<br>    <span class="hljs-keyword">while</span> (<span class="hljs-built_in">isdigit</span>(c))<br>        x = x * <span class="hljs-number">10</span> + c - <span class="hljs-string">&#x27;0&#x27;</span>, c = <span class="hljs-built_in">getchar</span>();<br>    <span class="hljs-keyword">if</span> (d == <span class="hljs-string">&#x27;-&#x27;</span>)<br>        x = -x;<br>&#125;<br><span class="hljs-keyword">template</span> &lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>&gt;</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">write</span><span class="hljs-params">(T x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (x / <span class="hljs-number">10</span>)<br>        <span class="hljs-built_in">write</span>(x / <span class="hljs-number">10</span>);<br>    <span class="hljs-built_in">putchar</span>(x % <span class="hljs-number">10</span> + <span class="hljs-string">&#x27;0&#x27;</span>);<br>&#125;<br><span class="hljs-keyword">template</span> &lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>&gt;</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">wt</span><span class="hljs-params">(T x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (x &lt; <span class="hljs-number">0</span>)<br>        <span class="hljs-built_in">putchar</span>(<span class="hljs-string">&#x27;-&#x27;</span>), x = -x;<br>    <span class="hljs-built_in">write</span>(x);<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Trie_01</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-keyword">int</span> rt = <span class="hljs-number">1</span>, tot = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">int</span> a[N][<span class="hljs-number">2</span>], num[N];<br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> k)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>, pos = rt;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">30</span>; i &gt;= <span class="hljs-number">0</span>; i--)<br>        &#123;<br>            <span class="hljs-keyword">int</span> val = (x &gt;&gt; i) &amp; <span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">if</span> (a[pos][!val] &amp;&amp; num[a[pos][!val]] &amp;&amp; num[a[pos][!val]] &gt;= k)<br>                res += <span class="hljs-number">1</span> &lt;&lt; i, pos = a[pos][!val];<br>            <span class="hljs-keyword">else</span><br>                k -= num[a[pos][!val]], pos = a[pos][val];<br>        &#125;<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">ins</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">int</span> pos = rt;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">30</span>; i &gt;= <span class="hljs-number">0</span>; i--)<br>        &#123;<br>            <span class="hljs-keyword">int</span> val = (x &gt;&gt; i) &amp; <span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">if</span> (a[pos][val])<br>                pos = a[pos][val];<br>            <span class="hljs-keyword">else</span><br>                pos = a[pos][val] = ++tot;<br>            num[pos]++;<br>        &#125;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">del</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">int</span> pos = rt;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">30</span>; i &gt;= <span class="hljs-number">0</span>; i--)<br>        &#123;<br>            <span class="hljs-keyword">int</span> val = (x &gt;&gt; i) &amp; <span class="hljs-number">1</span>;<br>            pos = a[pos][val];<br>            num[pos]--;<br>        &#125;<br>    &#125;<br>&#125; T;<br><br><span class="hljs-keyword">int</span> n;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">read</span>(n);<br>    <span class="hljs-keyword">while</span> (n--)<br>    &#123;<br>        <span class="hljs-keyword">int</span> op, x;<br>        <span class="hljs-built_in">read</span>(op), <span class="hljs-built_in">read</span>(x);<br>        <span class="hljs-keyword">if</span> (op == <span class="hljs-number">1</span>)<br>            T.<span class="hljs-built_in">ins</span>(x);<br>        <span class="hljs-keyword">if</span> (op == <span class="hljs-number">2</span>)<br>            T.<span class="hljs-built_in">del</span>(x);<br>        <span class="hljs-keyword">if</span> (op == <span class="hljs-number">3</span>)<br>        &#123;<br>            <span class="hljs-keyword">int</span> k;<br>            <span class="hljs-built_in">read</span>(k);<br>            <span class="hljs-built_in">write</span>(T.<span class="hljs-built_in">find</span>(x, k)), <span class="hljs-built_in">putchar</span>(<span class="hljs-string">&#x27;\n&#x27;</span>);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 题解 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 数据结构 </tag>
+            
+            <tag> Trie </tag>
+            
+            <tag> 01-Trie </tag>
+            
+            <tag> CornOI </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>「Corn#15」内卷时代</title>
       <link href="/2021/08/24/Corn15-T2/"/>
       <url>/2021/08/24/Corn15-T2/</url>
@@ -68,7 +99,7 @@
       <link href="/2021/08/24/Corn15-%E6%80%BB%E7%BB%93/"/>
       <url>/2021/08/24/Corn15-%E6%80%BB%E7%BB%93/</url>
       
-        <content type="html"><![CDATA[<p><del>fr 的题果然难</del><br><del>我竟然没去世</del><br>开始先看 T1，想了半天好像有一个 $O(n)$ 的递推，但是会炸高精。<br>先扔这去看 T2，思考良久<del>无果</del>，写了个暴力。<br>然后是 T3，哇这不是 01-Trie 吗，有 $54$ 分，写完了想 $k\neq 1$ 的情况，发现和 $k=1$ 几乎是一样的，写完了。<br>回去看 T1，<del>傻透气的</del>我发现自己分母算错了，炸不了高精，可以过 $100$，愉快写完。<br>T4 一看就是神仙题，溜了。<br>预估得分 $100+7+100+0=207$<br>实际得分 $100+0+100+0=200$<br>只挂了个暴力。<br>话说我 T1 解法和题解不一样欸。<br><del>这套题真难啊</del><br><del>明天的比赛竟然还没放出来</del></p>]]></content>
+        <content type="html"><![CDATA[<p><del>fr 的题果然难</del><br><del>我竟然没去世</del><br>开始先看 T1，想了半天好像有一个 $O(n)$ 的递推，但是会炸高精。<br>先扔这去看 T2，思考良久<del>无果</del>，写了个暴力。<br>然后是 T3，哇这不是 01-Trie 吗，有 $54$ 分，写完了想 $k\neq 1$ 的情况，发现和 $k=1$ 几乎是一样的，写完了。<br>回去看 T1，<del>傻透气的</del>我发现自己分母算错了，炸不了高精，可以过 $100$，愉快写完。<br>T4 一看就是神仙题，溜了。<br>预估得分 $100+7+100+0=207$<br>实际得分 $100+0+100+0=200$<br>只挂了个暴力。<br>话说我 T1 解法和题解不一样欸。<br><del>这套题真难啊</del><br><del>明天的比赛竟然还没放出来</del></p><hr><p>题解：<br><a href="https://cymrain07.github.io/2021/08/24/Corn15-T1/">T1 思维碰撞</a><br><a href="https://cymrain07.github.io/2021/08/24/Corn15-T2/">T2 内卷时代</a><br><a href="https://cymrain07.github.io/2021/08/24/Corn15-T3/">T3 身败名裂</a></p>]]></content>
       
       
       <categories>
@@ -194,9 +225,9 @@
       
         <tags>
             
-            <tag> 动态规划 </tag>
-            
             <tag> 图论 </tag>
+            
+            <tag> 动态规划 </tag>
             
             <tag> 树形 DP </tag>
             
@@ -254,9 +285,9 @@
       
         <tags>
             
-            <tag> 二分答案 </tag>
-            
             <tag> 图论 </tag>
+            
+            <tag> 二分答案 </tag>
             
             <tag> 最短路 </tag>
             
@@ -285,11 +316,11 @@
       
         <tags>
             
+            <tag> 图论 </tag>
+            
             <tag> 动态规划 </tag>
             
             <tag> DAG 上的 DP </tag>
-            
-            <tag> 图论 </tag>
             
             <tag> 拓扑排序 </tag>
             
@@ -660,11 +691,11 @@
       
         <tags>
             
+            <tag> 图论 </tag>
+            
             <tag> 数据结构 </tag>
             
             <tag> 线段树 </tag>
-            
-            <tag> 图论 </tag>
             
             <tag> 树链剖分 </tag>
             
