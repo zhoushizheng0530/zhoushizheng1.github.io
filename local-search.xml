@@ -4,6 +4,39 @@
   
   
   <entry>
+    <title>「Corn#15」内卷时代</title>
+    <link href="/2021/08/24/Corn15-T2/"/>
+    <url>/2021/08/24/Corn15-T2/</url>
+    
+    <content type="html"><![CDATA[<p>先用线性筛求出每个数的最小质因数。<br>对于每个单点乘，质因数分解 $x$，更新一下 $a(i)$ 的质因数分解。<br>如果 $a(i)$ 的某个质因数个数比答案的大则更新答案。</p><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> N 200005</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> M 20000005</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> mod 1000000007</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> int long long</span><br><span class="hljs-keyword">int</span> ans = <span class="hljs-number">1</span>;<br>bitset&lt;M&gt; np;<br><span class="hljs-keyword">int</span> pri[M], cnt, pre[M];<br>unordered_map&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; mp[N], res;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sieve</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span></span><br><span class="hljs-function"></span>&#123;<br>    np[<span class="hljs-number">1</span>] = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">2</span>; i &lt; n; i++)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (!np[i])<br>            pri[++cnt] = i, pre[i] = i;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">1</span>; i * pri[j] &lt; n &amp;&amp; j &lt;= cnt; j++)<br>        &#123;<br>            np[i * pri[j]] = <span class="hljs-number">1</span>, pre[i * pri[j]] = pri[j];<br>            <span class="hljs-keyword">if</span> (!(i % pri[j]))<br>                <span class="hljs-keyword">break</span>;<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">mul</span><span class="hljs-params">(<span class="hljs-keyword">int</span> p, <span class="hljs-keyword">int</span> x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> t = pre[x]; x != <span class="hljs-number">1</span>; x /= t, t = pre[x])<br>    &#123;<br>        mp[p][t]++;<br>        <span class="hljs-keyword">if</span> (mp[p][t] &gt; res[t])<br>            res[t] = mp[p][t], ans = ans * t % mod;<br>    &#125;<br>&#125;<br><span class="hljs-keyword">int</span> n, m;<br><br><span class="hljs-function"><span class="hljs-keyword">signed</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-built_in">sieve</span>(M);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>, x; i &lt;= n; i++)<br>        cin &gt;&gt; x, <span class="hljs-built_in">mul</span>(i, x);<br>    <span class="hljs-keyword">while</span> (m--)<br>    &#123;<br>        <span class="hljs-keyword">int</span> i, x;<br>        cin &gt;&gt; i &gt;&gt; x;<br>        <span class="hljs-built_in">mul</span>(i, x);<br>        cout &lt;&lt; ans &lt;&lt; endl;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>题解</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>数学</tag>
+      
+      <tag>CornOI</tag>
+      
+      <tag>数论</tag>
+      
+      <tag>筛法</tag>
+      
+      <tag>gcd,lcm</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>「Corn#15」思维碰撞</title>
     <link href="/2021/08/24/Corn15-T1/"/>
     <url>/2021/08/24/Corn15-T1/</url>
@@ -19,6 +52,8 @@
     
     
     <tags>
+      
+      <tag>CornOI</tag>
       
       <tag>递推</tag>
       
@@ -45,7 +80,7 @@
     
     <tags>
       
-      <tag>Corn 系列</tag>
+      <tag>CornOI</tag>
       
     </tags>
     
@@ -74,6 +109,8 @@
       
       <tag>二分查找</tag>
       
+      <tag>CornOI</tag>
+      
       <tag>单调栈</tag>
       
     </tags>
@@ -100,6 +137,8 @@
     <tags>
       
       <tag>图论</tag>
+      
+      <tag>CornOI</tag>
       
       <tag>强连通分量</tag>
       
@@ -130,7 +169,7 @@
     
     <tags>
       
-      <tag>Corn 系列</tag>
+      <tag>CornOI</tag>
       
     </tags>
     
@@ -155,9 +194,9 @@
     
     <tags>
       
-      <tag>动态规划</tag>
-      
       <tag>图论</tag>
+      
+      <tag>动态规划</tag>
       
       <tag>树形 DP</tag>
       
@@ -188,7 +227,7 @@
       
       <tag>动态规划</tag>
       
-      <tag>Corn 系列</tag>
+      <tag>CornOI</tag>
       
       <tag>区间 DP</tag>
       
@@ -221,7 +260,7 @@
       
       <tag>最短路</tag>
       
-      <tag>Corn 系列</tag>
+      <tag>CornOI</tag>
       
     </tags>
     
@@ -246,11 +285,11 @@
     
     <tags>
       
+      <tag>图论</tag>
+      
       <tag>动态规划</tag>
       
       <tag>DAG 上的 DP</tag>
-      
-      <tag>图论</tag>
       
       <tag>拓扑排序</tag>
       
@@ -623,9 +662,9 @@
       
       <tag>数据结构</tag>
       
-      <tag>图论</tag>
-      
       <tag>线段树</tag>
+      
+      <tag>图论</tag>
       
       <tag>树链剖分</tag>
       
