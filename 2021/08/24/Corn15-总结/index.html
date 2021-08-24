@@ -61,7 +61,7 @@
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
 <!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
 <!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head>
@@ -201,7 +201,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      212 字
+      169 字
     </span>
   
 
@@ -235,18 +235,18 @@
             <h1 style="display: none">「Corn#15」赛后总结</h1>
             
             <div class="markdown-body">
-              <p><s>fr 的题果然难</s><br />
-<s>我竟然没去世</s><br />
-开始先看 T1，想了半天好像有一个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span> 的递推，但是会炸高精。<br />
-先扔这去看 T2，思考良久<s>无果</s>，写了个暴力。<br />
-然后是 T3，哇这不是 01-Trie 吗，有 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>54</mn></mrow><annotation encoding="application/x-tex">54</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span><span class="mord">4</span></span></span></span> 分，写完了想 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi><mi mathvariant="normal">≠</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">k\neq 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mrel"><span class="mord"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.69444em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="rlap"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="inner"><span class="mrel"></span></span><span class="fix"></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.19444em;"><span></span></span></span></span></span></span><span class="mrel">=</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 的情况，发现和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">k=1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 几乎是一样的，写完了。<br />
-回去看 T1，<s>傻透气的</s>我发现自己分母算错了，炸不了高精，可以过 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>100</mn></mrow><annotation encoding="application/x-tex">100</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span></span></span></span>，愉快写完。<br />
-T4 一看就是神仙题，溜了。<br />
-预估得分 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>100</mn><mo>+</mo><mn>7</mn><mo>+</mo><mn>100</mn><mo>+</mo><mn>0</mn><mo>=</mo><mn>207</mn></mrow><annotation encoding="application/x-tex">100+7+100+0=207</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">7</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">0</span><span class="mord">7</span></span></span></span><br />
-实际得分 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>100</mn><mo>+</mo><mn>0</mn><mo>+</mo><mn>100</mn><mo>+</mo><mn>0</mn><mo>=</mo><mn>200</mn></mrow><annotation encoding="application/x-tex">100+0+100+0=200</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">0</span><span class="mord">0</span></span></span></span><br />
-只挂了个暴力。<br />
-话说我 T1 解法和题解不一样欸。<br />
-<s>这套题真难啊</s><br />
+              <p><s>fr 的题果然难</s><br>
+<s>我竟然没去世</s><br>
+开始先看 T1，想了半天好像有一个 <img src="https://math.now.sh?inline=O%28n%29" srcset="/img/loading.gif" lazyload style="display:inline-block;margin: 0;"/> 的递推，但是会炸高精。<br>
+先扔这去看 T2，思考良久<s>无果</s>，写了个暴力。<br>
+然后是 T3，哇这不是 01-Trie 吗，有 <img src="https://math.now.sh?inline=54" srcset="/img/loading.gif" lazyload style="display:inline-block;margin: 0;"/> 分，写完了想 <img src="https://math.now.sh?inline=k%5Cneq%201" srcset="/img/loading.gif" lazyload style="display:inline-block;margin: 0;"/> 的情况，发现和 <img src="https://math.now.sh?inline=k%3D1" srcset="/img/loading.gif" lazyload style="display:inline-block;margin: 0;"/> 几乎是一样的，写完了。<br>
+回去看 T1，<s>傻透气的</s>我发现自己分母算错了，炸不了高精，可以过 <img src="https://math.now.sh?inline=100" srcset="/img/loading.gif" lazyload style="display:inline-block;margin: 0;"/>，愉快写完。<br>
+T4 一看就是神仙题，溜了。<br>
+预估得分 <img src="https://math.now.sh?inline=100%2B7%2B100%2B0%3D207" srcset="/img/loading.gif" lazyload style="display:inline-block;margin: 0;"/><br>
+实际得分 <img src="https://math.now.sh?inline=100%2B0%2B100%2B0%3D200" srcset="/img/loading.gif" lazyload style="display:inline-block;margin: 0;"/><br>
+只挂了个暴力。<br>
+话说我 T1 解法和题解不一样欸。<br>
+<s>这套题真难啊</s><br>
 <s>明天的比赛竟然还没放出来</s></p>
 
             </div>
