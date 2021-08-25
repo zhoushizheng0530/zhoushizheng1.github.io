@@ -97,7 +97,7 @@
     <link href="/2021/08/25/Corn17-%E6%80%BB%E7%BB%93/"/>
     <url>/2021/08/25/Corn17-%E6%80%BB%E7%BB%93/</url>
     
-    <content type="html"><![CDATA[<p><del>没想到 YSJ 出题那么毒瘤</del><br><del>为什么题目名都是日文</del><br>T1 很明显是贪心，但是没想到怎么贪。<br>接下来看 T3，<del>不会</del><br>又去想 T1，发现贪心做法极其简单，$100$ 分到手。<br>然后 T2，只会 $40$ 分暴力。写完了。<br>T4 肯定是数据结构，<del>但我不会</del>，写了 $15$ 分暴力。<br>最后 T3，写了 $O(n^2)$ 暴力，有 $65$ 分。<br>预估得分：$100+40+65+15=220$<br>实际得分：$100+10+65+15=190$<br>咳 T2 没开 <code>long long</code>，挂了 $30$ 分。<br>注意细节啊！</p><hr><p>题解：</p>]]></content>
+    <content type="html"><![CDATA[<p><del>没想到 YSJ 出题那么毒瘤</del><br><del>为什么题目名都是日文</del><br>T1 很明显是贪心，但是没想到怎么贪。<br>接下来看 T3，<del>不会</del><br>又去想 T1，发现贪心做法极其简单，$100$ 分到手。<br>然后 T2，只会 $40$ 分暴力。写完了。<br>T4 肯定是数据结构，<del>但我不会</del>，写了 $15$ 分暴力。<br>最后 T3，写了 $O(n^2)$ 暴力，有 $65$ 分。<br>预估得分：$100+40+65+15=220$<br>实际得分：$100+10+65+15=190$<br>咳 T2 没开 <code>long long</code>，挂了 $30$ 分。<br>注意细节啊！</p><hr><p>题解：</p><ul><li><a href="https://cymrain07.github.io/2021/08/25/Corn17-T1/">T1 お気に召すまま</a></li><li><a href="https://cymrain07.github.io/2021/08/25/Corn17-T2/">T2 ウミユリ海底譚</a></li><li><a href="https://cymrain07.github.io/2021/08/25/Corn17-T4/">T4 ローリンガール</a></li></ul>]]></content>
     
     
     <categories>
@@ -366,9 +366,9 @@
     
     <tags>
       
-      <tag>动态规划</tag>
-      
       <tag>图论</tag>
+      
+      <tag>动态规划</tag>
       
       <tag>树形 DP</tag>
       
@@ -426,11 +426,11 @@
     
     <tags>
       
+      <tag>二分答案</tag>
+      
       <tag>图论</tag>
       
       <tag>最短路</tag>
-      
-      <tag>二分答案</tag>
       
       <tag>CornOI</tag>
       
@@ -457,11 +457,11 @@
     
     <tags>
       
+      <tag>图论</tag>
+      
       <tag>动态规划</tag>
       
       <tag>DAG 上的 DP</tag>
-      
-      <tag>图论</tag>
       
       <tag>拓扑排序</tag>
       
@@ -834,9 +834,9 @@
       
       <tag>数据结构</tag>
       
-      <tag>线段树</tag>
-      
       <tag>图论</tag>
+      
+      <tag>线段树</tag>
       
       <tag>树链剖分</tag>
       
