@@ -4,6 +4,56 @@
   
   
   <entry>
+    <title>「NOIP 模拟赛 R5」clique</title>
+    <link href="/2021/08/27/NOIP%E6%A8%A1%E6%8B%9F%E8%B5%9BR5-T1/"/>
+    <url>/2021/08/27/NOIP%E6%A8%A1%E6%8B%9F%E8%B5%9BR5-T1/</url>
+    
+    <content type="html"><![CDATA[<p>设数轴上 $3$ 个点 $i,j,k$，且 $x_i&lt;x_j&lt;x_k$。<br>如果存在边 $(i,j)$ 和边 $(j,k)$，则必存在边 $(i,k)$。<br>证明：</p><script type="math/tex; mode=display">\begin{aligned}\because\ x_j-x_i&\geq w_i+w_j\\x_k-x_j&\geq w_j+w_k\\\therefore\ x_k-x_i&\geq w_i+2w_j+w_k\\\therefore\ x_k-x_i&\geq w_i+w_k\end{aligned}</script><p>即存在 $(i,k)$ 这条边。<br>所以求最大团就转化为了求最长链。<br>两个点连边的要求可以转化成 $x_i-w_i\geq x_j+w_j$。<br>设 $f(i)$ 表示以 $i$ 结尾的最长链长度。</p><script type="math/tex; mode=display">f(i)=\max_{j=1}^{i-1}\{f(j),\text{if }x_i-w_i\geq x_j+w_j\}+1</script><p>用树状数组优化 DP 过程。<br>时间复杂度 $O(n\log n)$。<br>注意离散化。</p><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> N 200005</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> IO(x) freopen(x <span class="hljs-meta-string">&quot;.in&quot;</span>, <span class="hljs-meta-string">&quot;r&quot;</span>, stdin), freopen(x <span class="hljs-meta-string">&quot;.out&quot;</span>, <span class="hljs-meta-string">&quot;w&quot;</span>, stdout)</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>&gt;</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">read</span><span class="hljs-params">(T &amp;x)</span></span><br><span class="hljs-function"></span>&#123;<br>    x = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">char</span> c = <span class="hljs-built_in">getchar</span>(), d = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span> (c &lt; <span class="hljs-string">&#x27;0&#x27;</span> || c &gt; <span class="hljs-string">&#x27;9&#x27;</span>)<br>        d = c, c = <span class="hljs-built_in">getchar</span>();<br>    <span class="hljs-keyword">while</span> (c &gt;= <span class="hljs-string">&#x27;0&#x27;</span> &amp;&amp; c &lt;= <span class="hljs-string">&#x27;9&#x27;</span>)<br>        x = (x &lt;&lt; <span class="hljs-number">1</span>) + (x &lt;&lt; <span class="hljs-number">3</span>) + c - <span class="hljs-string">&#x27;0&#x27;</span>, c = <span class="hljs-built_in">getchar</span>();<br>    <span class="hljs-keyword">if</span> (d == <span class="hljs-string">&#x27;-&#x27;</span>)<br>        x = -x;<br>&#125;<br><span class="hljs-keyword">template</span> &lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>&gt;</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">wt</span><span class="hljs-params">(T x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (x / <span class="hljs-number">10</span>)<br>        <span class="hljs-built_in">wt</span>(x / <span class="hljs-number">10</span>);<br>    <span class="hljs-built_in">putchar</span>(x % <span class="hljs-number">10</span> + <span class="hljs-string">&#x27;0&#x27;</span>);<br>&#125;<br><span class="hljs-keyword">template</span> &lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>&gt;</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">wtsp</span><span class="hljs-params">(T x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (x &lt; <span class="hljs-number">0</span>)<br>        <span class="hljs-built_in">putchar</span>(<span class="hljs-string">&#x27;-&#x27;</span>), x = -x;<br>    <span class="hljs-built_in">wt</span>(x), <span class="hljs-built_in">putchar</span>(<span class="hljs-string">&#x27; &#x27;</span>);<br>&#125;<br><span class="hljs-keyword">template</span> &lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>&gt;</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">wtln</span><span class="hljs-params">(T x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (x &lt; <span class="hljs-number">0</span>)<br>        <span class="hljs-built_in">putchar</span>(<span class="hljs-string">&#x27;-&#x27;</span>), x = -x;<br>    <span class="hljs-built_in">wt</span>(x), <span class="hljs-built_in">putchar</span>(<span class="hljs-string">&#x27;\n&#x27;</span>);<br>&#125;<br><span class="hljs-keyword">int</span> n, tot;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">BIT</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-keyword">int</span> c[N &lt;&lt; <span class="hljs-number">1</span>];<br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">qry</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span> (; x; x -= x &amp; -x)<br>            res = <span class="hljs-built_in">max</span>(res, c[x]);<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">upd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-keyword">for</span> (; x &lt;= tot; x += x &amp; -x)<br>            c[x] = <span class="hljs-built_in">max</span>(c[x], y);<br>    &#125;<br>&#125; T;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">dot</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-keyword">int</span> x, w;<br>    <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span>&lt;(<span class="hljs-keyword">const</span> dot &amp;y) <span class="hljs-keyword">const</span> &#123; <span class="hljs-keyword">return</span> x &lt; y.x; &#125;<br>&#125; a[N];<br><span class="hljs-keyword">int</span> t[N &lt;&lt; <span class="hljs-number">1</span>], dp[N], ans;<br>unordered_map&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; mp;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">IO</span>(<span class="hljs-string">&quot;clique&quot;</span>);<br>    <span class="hljs-built_in">read</span>(n);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>    &#123;<br>        <span class="hljs-built_in">read</span>(a[i].x), <span class="hljs-built_in">read</span>(a[i].w);<br>        t[i] = a[i].x + a[i].w, t[i + n] = a[i].x - a[i].w;<br>    &#125;<br>    <span class="hljs-built_in">sort</span>(a + <span class="hljs-number">1</span>, a + n + <span class="hljs-number">1</span>);<br>    <span class="hljs-built_in">sort</span>(t + <span class="hljs-number">1</span>, t + n * <span class="hljs-number">2</span> + <span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n * <span class="hljs-number">2</span>; i++)<br>        <span class="hljs-keyword">if</span> (!mp.<span class="hljs-built_in">count</span>(t[i]))<br>            mp[t[i]] = ++tot;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>    &#123;<br>        dp[i] = T.<span class="hljs-built_in">qry</span>(mp[a[i].x - a[i].w]) + <span class="hljs-number">1</span>;<br>        ans = <span class="hljs-built_in">max</span>(ans, dp[i]);<br>        T.<span class="hljs-built_in">upd</span>(mp[a[i].x + a[i].w], dp[i]);<br>    &#125;<br>    cout &lt;&lt; ans;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>题解</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>数据结构</tag>
+      
+      <tag>动态规划</tag>
+      
+      <tag>线性 DP</tag>
+      
+      <tag>树状数组</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>「NOIP 模拟赛 R4」赛后总结</title>
+    <link href="/2021/08/27/NOIP%E6%A8%A1%E6%8B%9F%E8%B5%9BR5-%E6%80%BB%E7%BB%93/"/>
+    <url>/2021/08/27/NOIP%E6%A8%A1%E6%8B%9F%E8%B5%9BR5-%E6%80%BB%E7%BB%93/</url>
+    
+    <content type="html"><![CDATA[<p><del>论开大数组的重要性</del><br>T3 很明显是数据结构题，用线段树，取模稍想了一下可以维护区间最大值来优化。<br>然后 T2，开始想错了后来写了 BFS，但是空间会爆。<br>接着 T1，想出奇葩 DP+树状数组做法。<br>T4 神仙题。<br>预估得分：$100+40+100+0=240$<br>实际得分：$60+60+100+0=220$<br>T1 树状数组空间开小了。<br><del>挂分惨烈</del></p><hr><p>题解：</p><ul><li><a href="">T1 clique</a></li><li><a href="">T2 Tourist Attractions</a></li><li><a href="">T3 mod</a></li><li><a href="">T4 number</a></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>赛后总结</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>「NOIP 模拟赛 R4」序列</title>
     <link href="/2021/08/26/NOIP%E6%A8%A1%E6%8B%9F%E8%B5%9BR4-T4/"/>
     <url>/2021/08/26/NOIP%E6%A8%A1%E6%8B%9F%E8%B5%9BR4-T4/</url>
@@ -300,9 +350,9 @@
     
     <tags>
       
-      <tag>CornOI</tag>
-      
       <tag>数学</tag>
+      
+      <tag>CornOI</tag>
       
       <tag>数论</tag>
       
@@ -532,9 +582,9 @@
     
     <tags>
       
-      <tag>图论</tag>
-      
       <tag>二分答案</tag>
+      
+      <tag>图论</tag>
       
       <tag>最短路</tag>
       
