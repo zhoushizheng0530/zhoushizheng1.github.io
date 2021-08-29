@@ -4,6 +4,43 @@
   
     
     <entry>
+      <title>「NOIP 模拟赛 R6」Dash Speed</title>
+      <link href="/2021/08/29/NOIP%E6%A8%A1%E6%8B%9F%E8%B5%9BR6-T4/"/>
+      <url>/2021/08/29/NOIP%E6%A8%A1%E6%8B%9F%E8%B5%9BR6-T4/</url>
+      
+        <content type="html"><![CDATA[<p>将每条边都存在线段树的 $[l_i,r_i]$ 区间上。<br>DFS 这颗线段树，在 DFS 过程中将每条边对应的两个节点用并查集合并，并维护合并后树的最长链。<br>最长链的两个点一定在合并前两棵树的四个点中，分类讨论维护。使用树链剖分/倍增求 LCA。<br>到达叶子节点后最长链即为对应节点答案。<br>回溯的时候要把操作撤销，所以要写可撤销并查集。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 题解 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 数据结构 </tag>
+            
+            <tag> 线段树 </tag>
+            
+            <tag> 并查集 </tag>
+            
+            <tag> 图论 </tag>
+            
+            <tag> LCA </tag>
+            
+            <tag> 可撤销并查集 </tag>
+            
+            <tag> 线段树分治 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>「NOIP 模拟赛 R6」Walk</title>
       <link href="/2021/08/29/NOIP%E6%A8%A1%E6%8B%9F%E8%B5%9BR6-T3/"/>
       <url>/2021/08/29/NOIP%E6%A8%A1%E6%8B%9F%E8%B5%9BR6-T3/</url>
@@ -680,9 +717,9 @@
       
         <tags>
             
-            <tag> 动态规划 </tag>
-            
             <tag> 图论 </tag>
+            
+            <tag> 动态规划 </tag>
             
             <tag> 树形 DP </tag>
             
@@ -771,11 +808,11 @@
       
         <tags>
             
+            <tag> 图论 </tag>
+            
             <tag> 动态规划 </tag>
             
             <tag> DAG 上的 DP </tag>
-            
-            <tag> 图论 </tag>
             
             <tag> 拓扑排序 </tag>
             
