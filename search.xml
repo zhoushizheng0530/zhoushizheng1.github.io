@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>「NOIP 模拟赛 R6」String Master</title>
+      <link href="/2021/08/29/NOIP%E6%A8%A1%E6%8B%9F%E8%B5%9BR6-T2/"/>
+      <url>/2021/08/29/NOIP%E6%A8%A1%E6%8B%9F%E8%B5%9BR6-T2/</url>
+      
+        <content type="html"><![CDATA[<p>首先枚举一个字符串位置相对于另一个的偏移值 $d$（$d\in(-n,n)$）。<br>再枚举每一个位置，如果两字符串该位置不同则加进队列。<br>如果队列大小 $&gt;k$，则更新答案：答案为队首下一个位置与队尾的子串长度。</p><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> N 10005</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> IO(x) freopen(x <span class="hljs-meta-string">&quot;.in&quot;</span>, <span class="hljs-meta-string">&quot;r&quot;</span>, stdin), freopen(x <span class="hljs-meta-string">&quot;.out&quot;</span>, <span class="hljs-meta-string">&quot;w&quot;</span>, stdout)</span><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>&gt;</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">read</span><span class="hljs-params">(T &amp;x)</span></span><br><span class="hljs-function"></span>&#123;<br>    x = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">char</span> c = <span class="hljs-built_in">getchar</span>(), d = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span> (c &lt; <span class="hljs-string">&#x27;0&#x27;</span> || c &gt; <span class="hljs-string">&#x27;9&#x27;</span>)<br>        d = c, c = <span class="hljs-built_in">getchar</span>();<br>    <span class="hljs-keyword">while</span> (c &gt;= <span class="hljs-string">&#x27;0&#x27;</span> &amp;&amp; c &lt;= <span class="hljs-string">&#x27;9&#x27;</span>)<br>        x = (x &lt;&lt; <span class="hljs-number">1</span>) + (x &lt;&lt; <span class="hljs-number">3</span>) + c - <span class="hljs-string">&#x27;0&#x27;</span>, c = <span class="hljs-built_in">getchar</span>();<br>    <span class="hljs-keyword">if</span> (d == <span class="hljs-string">&#x27;-&#x27;</span>)<br>        x = -x;<br>&#125;<br><span class="hljs-keyword">template</span> &lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>&gt;</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">wt</span><span class="hljs-params">(T x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (x / <span class="hljs-number">10</span>)<br>        <span class="hljs-built_in">wt</span>(x / <span class="hljs-number">10</span>);<br>    <span class="hljs-built_in">putchar</span>(x % <span class="hljs-number">10</span> + <span class="hljs-string">&#x27;0&#x27;</span>);<br>&#125;<br><span class="hljs-keyword">template</span> &lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>&gt;</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">wtsp</span><span class="hljs-params">(T x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (x &lt; <span class="hljs-number">0</span>)<br>        <span class="hljs-built_in">putchar</span>(<span class="hljs-string">&#x27;-&#x27;</span>), x = -x;<br>    <span class="hljs-built_in">wt</span>(x), <span class="hljs-built_in">putchar</span>(<span class="hljs-string">&#x27; &#x27;</span>);<br>&#125;<br><span class="hljs-keyword">template</span> &lt;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">T</span>&gt;</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">wtailn</span><span class="hljs-params">(T x)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span> (x &lt; <span class="hljs-number">0</span>)<br>        <span class="hljs-built_in">putchar</span>(<span class="hljs-string">&#x27;-&#x27;</span>), x = -x;<br>    <span class="hljs-built_in">wt</span>(x), <span class="hljs-built_in">putchar</span>(<span class="hljs-string">&#x27;\n&#x27;</span>);<br>&#125;<br><span class="hljs-keyword">int</span> n, K, ans, head, tail, q[N];<br>string s, t;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">IO</span>(<span class="hljs-string">&quot;master&quot;</span>);<br>    q[<span class="hljs-number">0</span>] = <span class="hljs-number">-1</span>;<br>    <span class="hljs-built_in">read</span>(n), <span class="hljs-built_in">read</span>(K);<br>    cin &gt;&gt; s &gt;&gt; t;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> d = <span class="hljs-number">0</span>; d &lt; n; ++d)<br>    &#123;<br>        head = <span class="hljs-number">1</span>, tail = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n - d; i++)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (s[i] != t[i + d])<br>                q[++tail] = i;<br>            <span class="hljs-keyword">if</span> (tail - head == K)<br>                head++;<br>            ans = <span class="hljs-built_in">max</span>(ans, i - q[head - <span class="hljs-number">1</span>]);<br>        &#125;<br>        head = <span class="hljs-number">1</span>, tail = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n - d; i++)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (t[i] != s[i + d])<br>                q[++tail] = i;<br>            <span class="hljs-keyword">if</span> (tail - head == K)<br>                head++;<br>            ans = <span class="hljs-built_in">max</span>(ans, i - q[head - <span class="hljs-number">1</span>]);<br>        &#125;<br>    &#125;<br>    <span class="hljs-built_in">wt</span>(ans);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 题解 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 数据结构 </tag>
+            
+            <tag> 队列 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>「NOIP 模拟赛 R6」赛后总结</title>
       <link href="/2021/08/29/NOIP%E6%A8%A1%E6%8B%9F%E8%B5%9BR6-%E6%80%BB%E7%BB%93/"/>
       <url>/2021/08/29/NOIP%E6%A8%A1%E6%8B%9F%E8%B5%9BR6-%E6%80%BB%E7%BB%93/</url>
@@ -624,9 +651,9 @@
       
         <tags>
             
-            <tag> 动态规划 </tag>
-            
             <tag> 图论 </tag>
+            
+            <tag> 动态规划 </tag>
             
             <tag> 树形 DP </tag>
             
@@ -715,11 +742,11 @@
       
         <tags>
             
+            <tag> 图论 </tag>
+            
             <tag> 动态规划 </tag>
             
             <tag> DAG 上的 DP </tag>
-            
-            <tag> 图论 </tag>
             
             <tag> 拓扑排序 </tag>
             
@@ -1094,9 +1121,9 @@
             
             <tag> 数据结构 </tag>
             
-            <tag> 线段树 </tag>
-            
             <tag> 图论 </tag>
+            
+            <tag> 线段树 </tag>
             
             <tag> 树链剖分 </tag>
             
