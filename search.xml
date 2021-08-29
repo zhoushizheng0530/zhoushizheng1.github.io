@@ -141,7 +141,7 @@
       <link href="/2021/08/27/NOIP%E6%A8%A1%E6%8B%9F%E8%B5%9BR5-%E6%80%BB%E7%BB%93/"/>
       <url>/2021/08/27/NOIP%E6%A8%A1%E6%8B%9F%E8%B5%9BR5-%E6%80%BB%E7%BB%93/</url>
       
-        <content type="html"><![CDATA[<p><del>论开大数组的重要性</del><br>T3 很明显是数据结构题，用线段树，取模稍想了一下可以维护区间最大值来优化。<br>然后 T2，开始想错了后来写了 BFS，但是空间会爆。<br>接着 T1，想出奇葩 DP+树状数组做法。<br>T4 神仙题。<br>预估得分：$100+40+100+0=240$<br>实际得分：$60+60+100+0=220$<br>T1 树状数组空间开小了。<br><del>挂分惨烈</del></p><hr><p>题解：</p><ul><li><a href="">T1 clique</a></li><li><a href="">T2 Tourist Attractions</a></li><li><a href="">T3 mod</a></li><li><a href="">T4 number</a></li></ul>]]></content>
+        <content type="html"><![CDATA[<p><del>论开大数组的重要性</del><br>T3 很明显是数据结构题，用线段树，取模稍想了一下可以维护区间最大值来优化。<br>然后 T2，开始想错了后来写了 BFS，但是空间会爆。<br>接着 T1，想出奇葩 DP+树状数组做法。<br>T4 神仙题。<br>预估得分：$100+40+100+0=240$<br>实际得分：$60+60+100+0=220$<br>T1 树状数组空间开小了。<br><del>挂分惨烈</del></p><hr><p>题解：</p><ul><li><a href="https://cymrain07.github.io/2021/08/27/NOIP模拟赛R5-T1/">T1 clique</a></li><li><a href="https://cymrain07.github.io/2021/08/27/NOIP模拟赛R5-T2/">T2 Tourist Attractions</a></li><li><a href="https://cymrain07.github.io/2021/08/27/NOIP模拟赛R5-T3/">T3 mod</a></li><li><a href="https://cymrain07.github.io/2021/08/27/NOIP模拟赛R5-T4/">T4 number</a></li></ul>]]></content>
       
       
       <categories>
@@ -423,11 +423,11 @@
             
             <tag> 数据结构 </tag>
             
-            <tag> CornOI </tag>
-            
             <tag> Trie </tag>
             
             <tag> 01-Trie </tag>
+            
+            <tag> CornOI </tag>
             
         </tags>
       
@@ -452,9 +452,9 @@
       
         <tags>
             
-            <tag> CornOI </tag>
-            
             <tag> 数学 </tag>
+            
+            <tag> CornOI </tag>
             
             <tag> 数论 </tag>
             
