@@ -4,6 +4,37 @@
   
   
   <entry>
+    <title>「#137」小Z的袜子</title>
+    <link href="/2021/08/30/137/"/>
+    <url>/2021/08/30/137/</url>
+    
+    <content type="html"><![CDATA[<p>首先在一个区间 $[l,r]$ 中选两只袜子的方案数是 $\dbinom {\textit{len}} 2$，其中 $\textit{len}=r-l+1$。<br>对于一种颜色 $x$，选择相同颜色为 $x$ 的两只袜子的方案数为 $\dbinom{\textit{cnt}(x)}{2}$，其中 $\textit{cnt}(x)$ 为颜色为 $x$ 的袜子的个数。<br>所以概率就是：</p><script type="math/tex; mode=display">\begin{aligned}    \textit{ans}&=\dfrac{\displaystyle\sum \dbinom{\textit{cnt}(x)}{2}}{\dbinom {\textit{len}} 2}\\    &=\dfrac{-\textit{len}+\displaystyle\sum\textit{cnt}(x)^2}{\textit{len}(\textit{len}-1)}\end{aligned}</script><p>其中 $\sum \textit{cnt}(x)^2$ 要使用莫队求解。<br>先将序列分成若干（$\sqrt n$）块。<br>将所有区间以 $l$ <strong>所在块编号</strong>为第一关键字，$r$ 为第二关键字排序。<br>玄学优化：编号为奇数块内按 $r$ 递增排序，编号偶数块内按 $r$ 递减排序。<br>从上一个区间开始，暴力的一步一步移向下一个区间，并在途中更新答案。<br>时间复杂度 $O(n\sqrt n)$。</p><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> N 50005</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> int long long</span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">int</span> n, m, k, a[N], cnt[N], id[N];<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">ask</span></span><br><span class="hljs-class">&#123;</span><br>    <span class="hljs-keyword">int</span> l, r, i;<br>    <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span>&lt;(<span class="hljs-keyword">const</span> ask &amp;x) <span class="hljs-keyword">const</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (id[l] != id[x.l])<br>            <span class="hljs-keyword">return</span> id[l] &lt; id[x.l];<br>        <span class="hljs-keyword">if</span> (id[l] &amp; <span class="hljs-number">1</span>)<br>            <span class="hljs-keyword">return</span> r &lt; x.r;<br>        <span class="hljs-keyword">return</span> r &gt; x.r;<br>    &#125;<br>&#125; q[N];<br><span class="hljs-keyword">int</span> ans, ans1[N], ans2[N];<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>&#123; ans += cnt[a[x]] * <span class="hljs-number">2</span> + <span class="hljs-number">1</span>, cnt[a[x]]++; &#125;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">del</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span> </span>&#123; ans -= cnt[a[x]] * <span class="hljs-number">2</span> - <span class="hljs-number">1</span>, cnt[a[x]]--; &#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">gcd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span> </span>&#123; <span class="hljs-keyword">return</span> y ? <span class="hljs-built_in">gcd</span>(y, x % y) : x; &#125;<br><span class="hljs-function"><span class="hljs-keyword">signed</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n &gt;&gt; m;<br>    <span class="hljs-keyword">int</span> len = <span class="hljs-built_in">sqrt</span>(n);<br>    <span class="hljs-keyword">int</span> tmp = <span class="hljs-number">0</span>, tmp1 = <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>    &#123;<br>        <span class="hljs-keyword">if</span> (tmp == len)<br>            tmp = <span class="hljs-number">0</span>, tmp1++;<br>        tmp++;<br>        id[i] = tmp1;<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>        cin &gt;&gt; a[i];<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++)<br>        cin &gt;&gt; q[i].l &gt;&gt; q[i].r, q[i].i = i;<br>    <span class="hljs-built_in">sort</span>(q + <span class="hljs-number">1</span>, q + m + <span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">int</span> l = <span class="hljs-number">1</span>, r = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++)<br>    &#123;<br>        <span class="hljs-keyword">while</span> (l &gt; q[i].l)<br>            <span class="hljs-built_in">add</span>(--l);<br>        <span class="hljs-keyword">while</span> (r &lt; q[i].r)<br>            <span class="hljs-built_in">add</span>(++r);<br>        <span class="hljs-keyword">while</span> (l &lt; q[i].l)<br>            <span class="hljs-built_in">del</span>(l++);<br>        <span class="hljs-keyword">while</span> (r &gt; q[i].r)<br>            <span class="hljs-built_in">del</span>(r--);<br>        <span class="hljs-keyword">if</span> (l == r)<br>            ans1[q[i].i] = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            ans1[q[i].i] = ans - (r - l + <span class="hljs-number">1</span>);<br>            ans2[q[i].i] = (r - l + <span class="hljs-number">1</span>) * (r - l);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= m; i++)<br>        <span class="hljs-keyword">if</span> (ans1[i] == <span class="hljs-number">0</span>)<br>            cout &lt;&lt; <span class="hljs-string">&quot;0/1&quot;</span> &lt;&lt; endl;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>            <span class="hljs-keyword">int</span> tmp2 = <span class="hljs-built_in">gcd</span>(ans1[i], ans2[i]);<br>            ans1[i] /= tmp2, ans2[i] /= tmp2;<br>            cout &lt;&lt; ans1[i] &lt;&lt; <span class="hljs-string">&#x27;/&#x27;</span> &lt;&lt; ans2[i] &lt;&lt; endl;<br>        &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>题解</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>莫队</tag>
+      
+      <tag>数学</tag>
+      
+      <tag>数论</tag>
+      
+      <tag>概率期望</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>「NOIP 模拟赛 R6」Dash Speed</title>
     <link href="/2021/08/29/NOIP%E6%A8%A1%E6%8B%9F%E8%B5%9BR6-T4/"/>
     <url>/2021/08/29/NOIP%E6%A8%A1%E6%8B%9F%E8%B5%9BR6-T4/</url>
@@ -545,11 +576,11 @@
     
     <tags>
       
-      <tag>CornOI</tag>
-      
       <tag>数学</tag>
       
       <tag>数论</tag>
+      
+      <tag>CornOI</tag>
       
       <tag>筛法</tag>
       
@@ -703,7 +734,7 @@
   
   
   <entry>
-    <title>197-G 树的直径</title>
+    <title>「197-G」树的直径</title>
     <link href="/2021/08/19/197-G/"/>
     <url>/2021/08/19/197-G/</url>
     
@@ -794,7 +825,7 @@
   
   
   <entry>
-    <title>189-I 食物链</title>
+    <title>「189-I」食物链</title>
     <link href="/2021/08/18/189-I/"/>
     <url>/2021/08/18/189-I/</url>
     
@@ -825,7 +856,7 @@
   
   
   <entry>
-    <title>187-Y 银河英雄传说</title>
+    <title>「187-Y」银河英雄传说</title>
     <link href="/2021/08/18/187-Y/"/>
     <url>/2021/08/18/187-Y/</url>
     
@@ -854,7 +885,7 @@
   
   
   <entry>
-    <title>201-F The XOR-longest Path</title>
+    <title>「201-F」The XOR-longest Path</title>
     <link href="/2021/08/17/201-F/"/>
     <url>/2021/08/17/201-F/</url>
     
@@ -883,7 +914,7 @@
   
   
   <entry>
-    <title>201-J Power Strings</title>
+    <title>「201-J」Power Strings</title>
     <link href="/2021/08/17/201-J/"/>
     <url>/2021/08/17/201-J/</url>
     
@@ -910,7 +941,7 @@
   
   
   <entry>
-    <title>208-I 大魔法师</title>
+    <title>「208-I」大魔法师</title>
     <link href="/2021/08/16/208-I/"/>
     <url>/2021/08/16/208-I/</url>
     
@@ -928,9 +959,9 @@
       
       <tag>数据结构</tag>
       
-      <tag>线段树</tag>
-      
       <tag>数学</tag>
+      
+      <tag>线段树</tag>
       
       <tag>线性代数</tag>
       
@@ -943,7 +974,7 @@
   
   
   <entry>
-    <title>188-T Hotel G</title>
+    <title>「188-T」Hotel G</title>
     <link href="/2021/08/16/188-T/"/>
     <url>/2021/08/16/188-T/</url>
     
@@ -974,7 +1005,7 @@
   
   
   <entry>
-    <title>191-I 松鼠的新家</title>
+    <title>「191-I」松鼠的新家</title>
     <link href="/2021/08/15/191-I/"/>
     <url>/2021/08/15/191-I/</url>
     
@@ -1005,7 +1036,7 @@
   
   
   <entry>
-    <title>191-C 糖果</title>
+    <title>「191-C」糖果</title>
     <link href="/2021/08/15/191-C/"/>
     <url>/2021/08/15/191-C/</url>
     
@@ -1034,7 +1065,7 @@
   
   
   <entry>
-    <title>195-D 花匠</title>
+    <title>「195-D」花匠</title>
     <link href="/2021/08/15/195-D/"/>
     <url>/2021/08/15/195-D/</url>
     
@@ -1061,7 +1092,7 @@
   
   
   <entry>
-    <title>189-E Tree之最小方差树</title>
+    <title>「189-E」Tree之最小方差树</title>
     <link href="/2021/08/14/189-E/"/>
     <url>/2021/08/14/189-E/</url>
     
@@ -1088,7 +1119,7 @@
   
   
   <entry>
-    <title>197-K 骑士</title>
+    <title>「197-K」骑士</title>
     <link href="/2021/08/13/197-K/"/>
     <url>/2021/08/13/197-K/</url>
     
@@ -1142,7 +1173,7 @@
   
   
   <entry>
-    <title>187-R Sparse Table A</title>
+    <title>「187-R」Sparse Table A</title>
     <link href="/2021/08/13/187-R/"/>
     <url>/2021/08/13/187-R/</url>
     
@@ -1171,7 +1202,7 @@
   
   
   <entry>
-    <title>35006 旅游</title>
+    <title>「#35006」旅游</title>
     <link href="/2021/08/11/35006/"/>
     <url>/2021/08/11/35006/</url>
     
