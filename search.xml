@@ -24,11 +24,11 @@
             
             <tag> 并查集 </tag>
             
+            <tag> 线段树 </tag>
+            
             <tag> 图论 </tag>
             
             <tag> LCA </tag>
-            
-            <tag> 线段树 </tag>
             
             <tag> 可撤销并查集 </tag>
             
@@ -545,9 +545,9 @@
       
         <tags>
             
-            <tag> 数学 </tag>
-            
             <tag> CornOI </tag>
+            
+            <tag> 数学 </tag>
             
             <tag> 数论 </tag>
             
@@ -564,7 +564,7 @@
       <link href="/2021/08/24/Corn15-T1/"/>
       <url>/2021/08/24/Corn15-T1/</url>
       
-        <content type="html"><![CDATA[<p>设 $f(i)$ 表示以 $i$ 为右端点所有区间的价值和。<br>考虑每一对值相同的数对答案的贡献：</p><ul><li>$i-1$ 之前相同的数对对答案贡献相同，即 $f(i-1)$ 是 $f(i)$ 的一部分。</li><li>$i$ 位置上的这个数，和 $1$ 位置有 $1$ 贡献，$2$ 位置有 $2$ 贡献，$j$ 位置有 $j$ 贡献，$\text{if }a(i)=a(j)$。</li><li>开一个桶记录每个数对答案的贡献和，即 <code>c[a[i]]+=i</code>。</li></ul><p>递推式为：</p><script type="math/tex; mode=display">f(i)=f(i-1)+c(a(i))</script><p>最后答案为：</p><script type="math/tex; mode=display">\dfrac{\displaystyle\sum_{i=1}^nf(i)}{\displaystyle\sum_{i=1}^ni}</script><p>注意离散化。</p><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> int unsigned long long</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> N 100005</span><br><span class="hljs-keyword">int</span> c[N];<br><span class="hljs-keyword">int</span> n, a[N], tot, sum[N];<br><span class="hljs-keyword">double</span> f[N], x;<br>unordered_map&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; mp;<br><span class="hljs-function"><span class="hljs-keyword">signed</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>, x; i &lt;= n; i++)<br>    &#123;<br>        cin &gt;&gt; x;<br>        <span class="hljs-keyword">if</span> (mp.<span class="hljs-built_in">count</span>(x))<br>            a[i] = mp[x];<br>        <span class="hljs-keyword">else</span><br>            mp[x] = a[i] = ++tot;<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>        sum[i] = sum[i - <span class="hljs-number">1</span>] + i;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>    &#123;<br>        f[i] = f[i - <span class="hljs-number">1</span>] + c[a[i]];<br>        x += f[i] / sum[n];<br>        c[a[i]] += i;<br>    &#125;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%.6lf&quot;</span>, x);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>]]></content>
+        <content type="html"><![CDATA[<p>设 $f(i)$ 表示以 $i$ 为右端点所有区间的价值和。<br>考虑每一对值相同的数对答案的贡献：</p><ul><li>$i-1$ 之前相同的数对对答案贡献相同，即 $f(i-1)$ 是 $f(i)$ 的一部分。</li><li>$i$ 位置上的这个数，和 $1$ 位置有 $1$ 贡献，$2$ 位置有 $2$ 贡献，$j$ 位置有 $j$ 贡献，$\text{if }a(i)=a(j)$。</li><li>开一个桶记录每个数对答案的贡献和，即 <code>c[a[i]]+=i</code>。</li></ul><p>转移方程为：</p><script type="math/tex; mode=display">f(i)=f(i-1)+c(a(i))</script><p>最后答案为：</p><script type="math/tex; mode=display">\dfrac{\displaystyle\sum_{i=1}^nf(i)}{\displaystyle\sum_{i=1}^ni}</script><p>注意离散化。</p><figure class="highlight cpp"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> int unsigned long long</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> N 100005</span><br><span class="hljs-keyword">int</span> c[N];<br><span class="hljs-keyword">int</span> n, a[N], tot, sum[N];<br><span class="hljs-keyword">double</span> f[N], x;<br>unordered_map&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; mp;<br><span class="hljs-function"><span class="hljs-keyword">signed</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    cin &gt;&gt; n;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>, x; i &lt;= n; i++)<br>    &#123;<br>        cin &gt;&gt; x;<br>        <span class="hljs-keyword">if</span> (mp.<span class="hljs-built_in">count</span>(x))<br>            a[i] = mp[x];<br>        <span class="hljs-keyword">else</span><br>            mp[x] = a[i] = ++tot;<br>    &#125;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>        sum[i] = sum[i - <span class="hljs-number">1</span>] + i;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt;= n; i++)<br>    &#123;<br>        f[i] = f[i - <span class="hljs-number">1</span>] + c[a[i]];<br>        x += f[i] / sum[n];<br>        c[a[i]] += i;<br>    &#125;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%.6lf&quot;</span>, x);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>]]></content>
       
       
       <categories>
@@ -576,9 +576,11 @@
       
         <tags>
             
-            <tag> CornOI </tag>
+            <tag> 动态规划 </tag>
             
-            <tag> 递推 </tag>
+            <tag> 线性 DP </tag>
+            
+            <tag> CornOI </tag>
             
         </tags>
       
@@ -1187,9 +1189,9 @@
             
             <tag> 数据结构 </tag>
             
-            <tag> 图论 </tag>
-            
             <tag> 线段树 </tag>
+            
+            <tag> 图论 </tag>
             
             <tag> 树链剖分 </tag>
             
